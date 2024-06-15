@@ -18,6 +18,7 @@
         "price": {
           "type": "price",
           "settings": {
+            "color_scheme": "scheme-2"
           }
         },
         "variant_picker": {
