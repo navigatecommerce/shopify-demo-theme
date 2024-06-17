@@ -44,8 +44,10 @@
   }
 </style>
 
-<div class="product_extra--info-outer">
-  <div class="product_extra--info-inner">
-    {{ block.settings.additional_information }}
+{% if block.settings.additional_information != blank %}
+  <div class="product_extra--info-outer">
+    <div class="product_extra--info-inner">
+      {{ block.settings.additional_information }}
+    </div>
   </div>
-</div>
+{% endif %}
