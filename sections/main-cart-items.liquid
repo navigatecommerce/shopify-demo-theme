@@ -25,13 +25,51 @@
 
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var clearCartButton = document.getElementById('cart_clear--button');
+    if (clearCartButton) {
+      clearCartButton.addEventListener('click', function () {
+        fetch('/cart/clear.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error('Failed to clear the cart');
+            }
+          })
+          .then((data) => {
+            document.querySelector('.cart__empty-text').innerHTML = '<p>Your cart is empty.</p>';
+            document.querySelector('.cart-items').innerHTML = '';
+            document.querySelector('.cart__warnings').style.display = 'block';
+            document.querySelector('.cart__empty-text').style.display = 'block';
+            document.querySelector('.totals__total-value').textContent = 'Total: $0.00';
+            document.querySelector('.cart-count-bubble span').textContent = '0';
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+      });
+    }
+  });
+</script>
+
 <cart-items class="gradient color-{{ section.settings.color_scheme }} isolate{% if cart == empty %} is-empty{% else %} section-{{ section.id }}-padding{% endif %}">
   <div class="page-width">
     <div class="title-wrapper-with-link">
       <h1 class="title title--primary">{{ 'sections.cart.title' | t }}</h1>
-      <a href="{{ routes.all_products_collection_url }}" class="underlined-link">
-        {{- 'general.continue_shopping' | t -}}
-      </a>
+      <div class="cart_continue--shopping">
+        <button class="underlined-link" id="cart_clear--button">Clear Cart</button>
+        <a href="{{ routes.all_products_collection_url }}" class="underlined-link">
+          {{- 'general.continue_shopping' | t -}}
+        </a>
+      </div>
     </div>
 
     <div class="cart__warnings">
