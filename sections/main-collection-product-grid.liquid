@@ -171,7 +171,9 @@
                     show_rating: section.settings.show_rating,
                     lazy_load: lazy_load,
                     quick_add: section.settings.quick_add,
-                    section_id: section.id
+                    section_id: section.id,
+                    border: section.settings.show_border,
+                    border_color: section.settings.border_color
                   %}
                 </li>
               {%- endfor -%}
@@ -223,6 +225,17 @@
     {
       "type": "header",
       "content": "t:sections.main-collection-product-grid.settings.header__3.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_border",
+      "label": "Show Border",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color"
     },
     {
       "type": "select",
