@@ -1,0 +1,51 @@
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var headers = document.querySelectorAll('.product_extra--info-inner h4');
+
+    headers.forEach(function (header) {
+      header.addEventListener('click', function () {
+        var content = this.nextElementSibling;
+
+        if (content.classList.contains('open')) {
+          content.style.maxHeight = null;
+          content.classList.remove('open');
+        } else {
+          document.querySelectorAll('.product_extra--info-inner p.open').forEach(function (openContent) {
+            openContent.style.maxHeight = null;
+            openContent.classList.remove('open');
+          });
+          content.style.maxHeight = content.scrollHeight + 'px';
+          content.classList.add('open');
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .product_extra--info-inner h4 {
+    cursor: pointer;
+    margin: 0;
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .product_extra--info-inner p {
+    max-height: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 10px 10px 0px 10px;
+    transition: max-height 0.3s ease-out;
+  }
+
+  .product_extra--info-inner p.open {
+    max-height: 200px; /* or an appropriate max-height */
+    transition: max-height 0.3s ease-in;
+  }
+</style>
+
+<div class="product_extra--info-outer">
+  <div class="product_extra--info-inner">
+    {{ block.settings.additional_information }}
+  </div>
+</div>
